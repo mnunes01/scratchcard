@@ -31,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mnunes01/scracthcard.git"
+    "url": "git+https://github.com/mnunes01/scratchcard.git"
   },
   "keywords": [
     "react",
@@ -42,9 +42,9 @@
   "author": "Mario Nunes",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mnunes01/scracthcard/issues"
+    "url": "https://github.com/mnunes01/scratchcard.git/issues"
   },
-  "homepage": "https://github.com/mnunes01/scracthcard#readme",
+  "homepage": "https://github.com/mnunes01/scratchcard.git#readme",
   "dependencies": {
     "css-loader": "^0.28.5",
     "flux": "^3.1.3",
