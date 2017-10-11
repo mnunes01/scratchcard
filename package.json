@@ -1,0 +1,85 @@
+{
+  "name": "scracthCard",
+  "version": "1.0.0",
+  "description": "react scracth card spa app ",
+  "main": "./src/app.js",
+  "scripts": {
+    "start": "webpack-dev-server --open --hot --config=webpack.dev.config.js",
+    "build": "webpack --config=webpack.prod.config.js",
+    "test": "jest"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.js?(x)",
+      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(css|less)$": "<rootDir>/__jestmocks__/CSSStub.js"
+    },
+    "testEnvironment": "jsdom",
+    "testURL": "http://localhost"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mnunes01/scracthcard.git"
+  },
+  "keywords": [
+    "react",
+    "contacts",
+    "spa",
+    "gig"
+  ],
+  "author": "Mario Nunes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mnunes01/scracthcard/issues"
+  },
+  "homepage": "https://github.com/mnunes01/scracthcard#readme",
+  "dependencies": {
+    "css-loader": "^0.28.5",
+    "flux": "^3.1.3",
+    "localforage": "^1.5.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-router-dom": "^4.1.2",
+    "react-select": "^1.0.0-rc.10",
+    "style-loader": "^0.18.2",
+    "yuki-createjs": "0.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "^20.0.3",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.16",
+    "compression-webpack-plugin": "^1.0.0",
+    "copy-webpack-plugin": "^4.0.1",
+    "eslint": "^4.5.0",
+    "eslint-config-react-app": "^2.0.0",
+    "eslint-plugin-flowtype": "^2.35.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.2.1",
+    "eslint-plugin-standard": "^3.0.1",
+    "gh-pages": "^1.0.0",
+    "html-webpack-plugin": "^2.30.1",
+    "jest": "^20.0.4",
+    "sw-precache-webpack-plugin": "^0.11.4",
+    "webpack": "^3.5.5",
+    "webpack-dev-server": "^2.7.1"
+  }
+}
