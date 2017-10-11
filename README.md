@@ -33,10 +33,10 @@ more details on the class itself.
 The intention of this approach is to allow the core code to be reused in case theres the desire of adding a diferent scratch card than tic tac toe.
 To change the tic tac toe theme for another one we just need to rewrite the method renderCardImg on the cordgenerator class.
 
-All the aspects, size, colors, price and prize values can be configured from:
+All the aspects, size, colors, price and prize values can be configured
 That allows a easy change of the game aspect without having to change any code.
+configuration file: src/config/config.js
 
-src/config/config.js
 - export const _CURSOR_SIZE = 20 //scracth cursor size
 - export const _CURSOR_COLOR = '#B9891E' //scracth cursor color
 - export const _SCRATCH_SURFACE_COLOR = 'silver' //scracth surface color

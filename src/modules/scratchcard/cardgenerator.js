@@ -1,4 +1,4 @@
-import CreateJs from 'yuki-createjs'
+import CreateJs from 'yuki-createjs' //import the create js libs
 
 export default class cardGenerator{
 
@@ -10,6 +10,7 @@ export default class cardGenerator{
       this._WINING_HIGHLIGTH_COLOR = winningHighLigthColor
       this._BACKGROUND_COLOR = backgroundColor
 
+      //used to store the detailed outupt of generated card
       this.tmpWin = {
         winnerSymbol: undefined,
         winingCard: false,
@@ -19,26 +20,60 @@ export default class cardGenerator{
       }
     }
 
+    /**
+    * get the winnerSymbol 1 - X 2 - O
+    * returns the winnerSymbol
+    * @method getWinnerSymbol
+    */
     getWinnerSymbol () {
       return this.tmpWin.winnerSymbol
     }
 
+    /**
+    * get the getWiningCard value
+    * returns the getWiningCard value, true or false if the card is prized or not
+    * @method getWiningCard
+    */
     getWiningCard () {
       return this.tmpWin.winingCard
     }
 
+    /**
+    * get the getWiningPositions array
+    * returns the getWiningPositions array value,
+    * the values on the array correspond to the line horizontal, Vertical or Diagonal where the symbols can be found
+    * @method getWiningPositions
+    */
     getWiningPositions () {
       return this.tmpWin.winingPositions
     }
 
+    /**
+    * get the card cached image
+    * returns a bitmap cached instance of the generated scratch card
+    * @method getCard
+    */
     getCard () {
       return this.generatePlay()
     }
 
+    /**
+    * get the generated card info
+    * returns a object containing info about the generated scratch card
+    * @method getCardInfo
+    */
     getCardInfo () {
       return this.tmpWin
     }
 
+    /**
+    * get the card cached image
+    * returns a bitmap cached instance of the previous generated scratch card
+    * using a simple array of 9 positions filled with 1 or 2
+    * used to render the image from a history entry
+    * @param {object} data - object containing scract card details
+    * @method getRenderedCardFromValues
+    */
     getRenderedCardFromValues (data) {
       console.log(data)
       this.tmpWin = {
@@ -49,6 +84,12 @@ export default class cardGenerator{
       return this.renderCardImg(data.cardInfo)
     }
 
+    /**
+    * generates a new scratch card
+    * random atributes a postion to an alternating symbol 1 - X 2 - O
+    * uses internal class methods  @method renderCardImg and @method checkWin to create the card
+    * @method generatePlay
+    */
     generatePlay () {
       //0 - empty, 1 - x, 2 - O
       const maxNumberOfTurns = 9
@@ -79,6 +120,11 @@ export default class cardGenerator{
       return this.renderCardImg(card)
     }
 
+    /**
+    * generates a new scratch card bitmap
+    * @param {array} values - object containing position atributions for the diferent symbols
+    * @method renderCardImg
+    */
     renderCardImg(values){
       var container = new createjs.Container() //cretae a global container for the card
 
@@ -150,6 +196,10 @@ export default class cardGenerator{
       return container.cacheCanvas //return the cached version to be render in a bitmap
     }
 
+    /**
+    * checks if theres a winning play on the card    
+    * @method checkWin
+    */
     checkWin(values,p1,p2,p3){
       //if values are not 0 - empty play and values are all the same on the requested positions we found a winner
       if( (values[p1] === values[p2] && values[p1] === values[p3]) && (values[p1] !== 0 || values[p2] !==0 || values[p3] != 0)){
