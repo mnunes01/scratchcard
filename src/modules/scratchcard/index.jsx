@@ -12,7 +12,7 @@ import * as Configs from '../../config/config.js'
 export default class ScratchCardController extends React.Component {
   constructor () {
     super()
-
+    //inital state
     this.state = {
       stage: undefined,
       bitmap: undefined,
@@ -36,20 +36,21 @@ export default class ScratchCardController extends React.Component {
     this.tickHandler = this.tick.bind(this)
   }
 
+
   componentDidMount () {
     this.setState({
-      stage: new createjs.Stage(ReactDOM.findDOMNode(this.refs.canvas)),
+      stage: new createjs.Stage(ReactDOM.findDOMNode(this.refs.canvas)), //create or stage from the dom element canvas
     }, ()=>{
-      createjs.Ticker.timingMode = createjs.Ticker.RAF
+      createjs.Ticker.timingMode = createjs.Ticker.RAF //register the ticker to run the animations
       createjs.Ticker.addEventListener('tick', this.tickHandler)
-      this.newCard()
-      createjs.Touch.enable(this.state.stage)
-      this.loadSounds()
+      this.newCard() //prepare a new card
+      createjs.Touch.enable(this.state.stage) //enable Touch
+      this.loadSounds() //load sounds
     })
   }
 
   componentWillUnmount () {
-    this.cleanStage()
+    this.cleanStage() //destruct any references
   }
 
   initialState () { //reset state to initial values
@@ -66,9 +67,9 @@ export default class ScratchCardController extends React.Component {
     })
   }
 
-  newCard () {
+  newCard () { //generate a new card and save it to history
     WalletActions.decreaseFunds({amount: Configs._CARD_VALUE})
-    this.cleanStage()
+    this.cleanStage() //clean everything first
     var card = new cardGenerator(
       Configs._WIDTH,
       Configs._HEIGHT,
@@ -80,29 +81,29 @@ export default class ScratchCardController extends React.Component {
     this.setState({
        drawingCanvas: new createjs.Shape(),
        rect: new createjs.Shape(),
-       bitmap: new createjs.Bitmap(card.getCard()),
-       winnerSymbol: card.getWinnerSymbol(),
+       bitmap: new createjs.Bitmap(card.getCard()), //grab the cached bitmap and preapre it to be added to the stage
+       winnerSymbol: card.getWinnerSymbol(), //grab the generated card info and propagate it to component state
        winingCard: card.getWiningCard(),
        winingPositions: card.getWiningPositions(),
-       cursor: new createjs.Shape(new createjs.Graphics().beginFill(Configs._CURSOR_COLOR).drawCircle(0, 0, Configs._CURSOR_SIZE)),
+       cursor: new createjs.Shape(new createjs.Graphics().beginFill(Configs._CURSOR_COLOR).drawCircle(0, 0, Configs._CURSOR_SIZE)), //scracth cursor
        showRevealButton: true
     },this.prepareStage)
     //save card to history
     HistoryActions.ActionSavePlay(card.getCardInfo(), ()=>{console.log('saved')})
   }
 
-  cleanStage () {
-    if(this.state.stage !== undefined){
-      createjs.Sound.stop()
-      createjs.Tween.removeTweens(this.state.stage)
-      this.state.stage.removeAllChildren()
-      this.state.stage.removeAllEventListeners()
-      this.state.stage.update()
-      this.initialState()
+  cleanStage () { // before we can create a card and show it for paly we need to ensure the previous one have been destroyed
+    if(this.state.stage !== undefined){ //if we have a stage, a previous card have been played
+      createjs.Sound.stop() //stop all playing sounds
+      createjs.Tween.removeTweens(this.state.stage) //remove all playing animations
+      this.state.stage.removeAllChildren() //remove all stage childrens
+      this.state.stage.removeAllEventListeners() // remove all listeners, mouse, animations etc...
+      this.state.stage.update() //update the stage to new status
+      this.initialState() // set component state to a reset state value
     }
   }
 
-  loadSounds(){
+  loadSounds(){ //loading sounds
     var assetsPath = '/assets/sounds/';
     var sounds = [
       {src:'lose.mp3', id: 'lose'},
@@ -113,32 +114,32 @@ export default class ScratchCardController extends React.Component {
     createjs.Sound.volume = 0.2;
   }
 
-  prepareStage (){
-    this.state.stage.enableMouseOver()
+  prepareStage (){ //prepare the stage and add the card image and the scratch overlay
+    this.state.stage.enableMouseOver() //enable mouse interections
     this.state.cursor.cursor = "pointer"
     this.state.cursor.alpha = 0
-    this.state.stage.addEventListener("stagemousedown", this.handleMouseDownHandler)
+    this.state.stage.addEventListener("stagemousedown", this.handleMouseDownHandler) //register the event listners
     this.state.stage.addEventListener("stagemouseup", this.handleMouseUpHandler)
     this.state.stage.addEventListener("stagemousemove", this.handleMouseMoveHandler)
 
-    this.state.drawingCanvas.cache(0, 0, Configs._WIDTH, Configs._HEIGHT)
-    this.state.bitmap.filters = [new createjs.AlphaMaskFilter(this.state.drawingCanvas.cacheCanvas)]
-    this.state.bitmap.cache(0, 0, Configs._WIDTH, Configs._HEIGHT)
+    this.state.drawingCanvas.cache(0, 0, Configs._WIDTH, Configs._HEIGHT) //create a canvas so we can scratch
+    this.state.bitmap.filters = [new createjs.AlphaMaskFilter(this.state.drawingCanvas.cacheCanvas)] //aply a alpha filter to the generated card bitmap
+    this.state.bitmap.cache(0, 0, Configs._WIDTH, Configs._HEIGHT) //cache the filter result for performance
 
-    this.state.rect.graphics.beginFill(Configs._SCRATCH_SURFACE_COLOR)
+    this.state.rect.graphics.beginFill(Configs._SCRATCH_SURFACE_COLOR) //scracth overlay
     this.state.rect.graphics.drawRect(0, 0, Configs._WIDTH, Configs._HEIGHT)
     this.state.rect.graphics.endFill()
     this.state.rect.cache(0, 0,Configs._WIDTH, Configs._HEIGHT)
 
-    this.state.stage.addChild(this.state.rect, this.state.bitmap, this.state.cursor)
-    this.state.stage.update()
+    this.state.stage.addChild(this.state.rect, this.state.bitmap, this.state.cursor) //add all elements to stage
+    this.state.stage.update() //and update the display
   }
 
   tick (event) { //main loop, only used for play the animations
     this.state.stage.update(event)
   }
 
-  handleMouseDown(event) {
+  handleMouseDown(event) { // user press down, register the point where the user is starting to scracth
     createjs.Tween.get(this.state.cursor, {loop: 0, override: true})
 			.to({alpha: 1}, 1000, createjs.Ease.getPowOut(1.5));
     var point = new createjs.Point(this.state.stage.mouseX, this.state.stage.mouseY)
@@ -149,7 +150,7 @@ export default class ScratchCardController extends React.Component {
     })
   }
 
-  handleMouseMove(event) {
+  handleMouseMove(event) { //scracth, removing part of the scracth layer as the user moves the mouse. We basic drawing with a rubber on the scracth overlay
     this.state.cursor.x = this.state.stage.mouseX
     this.state.cursor.y = this.state.stage.mouseY
     if (!this.state.isDrawing) {
@@ -172,9 +173,9 @@ export default class ScratchCardController extends React.Component {
     this.state.stage.update()
   }
 
-  handleMouseUp(event) {
-    createjs.Sound.stop()
-    createjs.Tween.get(this.state.cursor, {loop: 0, override: true})
+  handleMouseUp(event) { //stop the scracth, check if the card is already enough revelaed to give win lose feedback to the user
+    createjs.Sound.stop() //stop scracth sound
+    createjs.Tween.get(this.state.cursor, {loop: 0, override: true}) //animate the cursor to fade away
 			.to({alpha: 0}, 1000, createjs.Ease.getPowOut(1.5));
   	this.setState({
       isDrawing: false
@@ -186,19 +187,20 @@ export default class ScratchCardController extends React.Component {
     }
   }
 
-  getScratchAmount() {
+  getScratchAmount() { //check all the pixels to figure out whats the percentage of trasnparent ones at the moment.
     var alphaPixels = 0
     var alphaMaskFilter = new createjs.AlphaMapFilter(this.state.drawingCanvas.cacheCanvas)
     var canvas = alphaMaskFilter.alphaMap
     var ctx = canvas.getContext("2d")
     var data = ctx.getImageData(0,0, ctx.canvas.width,ctx.canvas.height).data
-    for(var i=3; i<data.length; i+=4) {
+    for(var i=3; i<data.length; i+=4) { //check every 4 positions, since the imagedata is rgbA (R,G,B,A) and we only interested on the Alpha value
       if(data[i] > 0) alphaPixels++
     }
+    //calculate and return the percentage of alpha pixels
     return Math.round(alphaPixels / (ctx.canvas.width * ctx.canvas.height)* 100)
   }
 
-  showResult() {
+  showResult() { // show the user with some animations and sounds the outcome of the scracth card, increase funds on winning
     if(!this.state.revealled){
       this.setState({
         revealled: true,
@@ -228,7 +230,7 @@ export default class ScratchCardController extends React.Component {
     }
   }
 
-  reveall () {
+  reveall () { //if the user hits the reveall button or the scracths the card enough to be revealled lets show the result and clear the unused layers 
     this.showResult()
     this.state.stage.removeChild(this.state.rect)
     this.state.bitmap.filters = []
