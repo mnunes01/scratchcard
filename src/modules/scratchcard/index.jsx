@@ -103,7 +103,7 @@ export default class ScratchCardController extends React.Component {
   }
 
   loadSounds(){
-    var assetsPath = '../../assets/sounds/';
+    var assetsPath = '/assets/sounds/';
     var sounds = [
       {src:'lose.mp3', id: 'lose'},
       {src:'win.mp3', id: 'win'},

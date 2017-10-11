@@ -4,11 +4,15 @@
 ** as it is much mor eeffecient than the script i wrote.
 */
 
-var CACHE_NAME = 'contatcs-manager'
+var CACHE_NAME = 'scracth-card'
 var urlsToCache = [
   '/',
   '/index.html',
-  '/index.js'
+  '/index.js',
+  '/assets/sounds/',
+  '/assets/sounds/lose.mp3',
+  '/assets/sounds/win.mp3',
+  '/assets/sounds/scratch.mp3'
 ]
 
 self.addEventListener('install', function (event) {
