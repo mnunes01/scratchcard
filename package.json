@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --open --hot --config=webpack.dev.config.js",
     "build": "webpack --config=webpack.prod.config.js",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "gh-pages -d dist"
   },
   "jest": {
     "collectCoverageFrom": [

@@ -28,11 +28,15 @@ var config = {
       {
         from: 'public/index.html',
         to: './'
+      },
+      {
+        from: 'public/assets/sounds/',
+        to: './assets/sounds/'
       }
     ]),
     new SWPrecacheWebpackPlugin(
       {
-        cacheId: 'gigcontacts',
+        cacheId: 'scracthcard',
         dontCacheBustUrlsMatching: /\.\w{8}\./,
         filename: 'service-worker.js',
         minify: true
