@@ -1,10 +1,10 @@
-# [Scracth Card APP](https://mnunes01.github.io/scracthcard/)
+# [Scracth Card APP](https://mnunes01.github.io/scratchcard/)
 react scracth card spa using browser indexedDB storage
 
 # Live Demo
-A working version of this app can be found on [React Contact APP](https://mnunes01.github.io/scracthcard/)
+A working version of this app can be found on [React Contact APP]https://mnunes01.github.io/scratchcard/)
 
-[https://mnunes01.github.io/scracthcard/](https://mnunes01.github.io/scracthcard/)
+[https://mnunes01.github.io/scracthcard/](https://mnunes01.github.io/scratchcard/)
 
 ## Instructions
 Pull the repo and run **npm install**
