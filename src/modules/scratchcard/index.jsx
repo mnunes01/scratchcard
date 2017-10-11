@@ -104,7 +104,7 @@ export default class ScratchCardController extends React.Component {
   }
 
   loadSounds(){ //loading sounds
-    var assetsPath = '/assets/sounds/';
+    var assetsPath = './assets/sounds/';
     var sounds = [
       {src:'lose.mp3', id: 'lose'},
       {src:'win.mp3', id: 'win'},
@@ -230,7 +230,7 @@ export default class ScratchCardController extends React.Component {
     }
   }
 
-  reveall () { //if the user hits the reveall button or the scracths the card enough to be revealled lets show the result and clear the unused layers 
+  reveall () { //if the user hits the reveall button or the scracths the card enough to be revealled lets show the result and clear the unused layers
     this.showResult()
     this.state.stage.removeChild(this.state.rect)
     this.state.bitmap.filters = []
