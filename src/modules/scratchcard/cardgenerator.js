@@ -94,8 +94,8 @@ export default class cardGenerator{
       //0 - empty, 1 - x, 2 - O
       const maxNumberOfTurns = 9
       const play = [...Array(maxNumberOfTurns).keys()] //placeholder for play spot position
-      const card = new Uint8Array(maxNumberOfTurns)
-      let currentTurn = 1 // X - 1 or O - 2 current turn
+      const card = new Uint8Array(maxNumberOfTurns)      
+      let currentTurn = Math.floor(Math.random() * 2) + 1 // X - 1 or O - 2 current turn
       for(var i=0; i < 9; i++){ //a max of 9 turns
         var rand = Math.floor(Math.random() * play.length) //get a random spot to play
         card[play[rand]] = currentTurn //set the play to the currentTurn symbol
@@ -197,7 +197,7 @@ export default class cardGenerator{
     }
 
     /**
-    * checks if theres a winning play on the card    
+    * checks if theres a winning play on the card
     * @method checkWin
     */
     checkWin(values,p1,p2,p3){
